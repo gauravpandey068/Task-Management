@@ -33,3 +33,9 @@ Route::post('/auth/logout', [LoginController::class, 'logout'])->name('logout');
 
 //home
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::post('/home', [HomeController::class, 'store']);
+//delete task
+Route::delete('/home/delete/{task}', [HomeController::class, 'destroy'])->name('home.destroy');
+//update task
+Route::get('/home/update/{task}', [HomeController::class, 'edit'])->name('home.update');
+Route::patch('/home/update/{task}/success', [HomeController::class, 'update'])->name('home.update.success');

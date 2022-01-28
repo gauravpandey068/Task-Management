@@ -11,23 +11,28 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function index(){
+    public function index()
+    {
         return view('auth.login');
     }
-    public function store(Request $request){
+
+    public function store(Request $request)
+    {
         //validate data
         $this->validate($request, [
-            'email'=>'required|email',
-            'password'=>'required|min:6',
+            'email' => 'required|email',
+            'password' => 'required|min:6',
         ]);
         //login user
-        if(!auth()->attempt($request->only(['email', 'password']))){
+        if (!auth()->attempt($request->only('email', 'password'), $request->remember)) {
             return back()->with('status', 'Invalid Credentials');
         }
         //redirect
         return redirect()->route('home');
     }
-    public function logout(Request $request){
+
+    public function logout(Request $request)
+    {
         //logout
         auth()->logout();
         return redirect('/');
